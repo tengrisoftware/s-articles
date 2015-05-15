@@ -12,7 +12,7 @@
 
     $scope.sendPost = function(articleData) {
       console.log('first = '+articleData);
-      var article   = new Article({title: articleData, content: "123123"});
+      var article   = new Article({title: articleData.title, content: articleData.content});
 
       article.$save().then(function(newArticle) {
         $scope.articles.push(newArticle);

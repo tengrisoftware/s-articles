@@ -3,7 +3,10 @@
 
     <form>
       <div class="form-group">
-        <input type="text" data-ng-model="article" class="form-control">
+        <p/><div>Title:</div>
+        <input type="text" data-ng-model="article.title" class="form-control">
+        <p/><div>Content:</div>
+        <input type="text" data-ng-model="article.content" class="form-control">
       </div>
       <div class="form-group">
         <button class="btn btn-success"
@@ -17,7 +20,10 @@
     <lo>
       <div data-ng-repeat='article in articles'>
         <li>
-          {{articles.article}}
+          {{article.title}}
+          <p>
+            {{article.content}}
+          </p>
         </li>
       </div>
     </lo>
