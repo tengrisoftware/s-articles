@@ -1,13 +1,29 @@
 doctype html
 html
   head
-    title= "Article Application"
-    block header
-      img(src = "/images/header.gif")
-  body
-   block body
+    title= title
+    // Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
 
-   footer
-   block footer
-      img(src= "/images/footer.jpg")
+    block styles
+      link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css")
+    //STYLES
+    link(rel="stylesheet", href="/styles/importer.css")
+    //STYLES END
 
+  body(data-ng-app='Article')
+
+    block body
+        // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+    script(src= "/vendor/jquery/dist/jquery.min.js")
+    script(src= "/vendor/bootstrap/dist/js/bootstrap.min.js")
+    script(src= "/vendor/angular/angular.min.js")
+    script(src= "/vendor/angular-resource/angular-resource.min.js")
+    script(src= "/vendor/angular-route/angular-route.min.js")
+
+    // SCRIPTS
+    script(src="/js/dependencies/sails.io.js")
+    script(src="/js/app/module.js")
+    script(src="/js/app/controller/HomeController.js")
+    script(src="/js/app/service/Post.js")
+    // SCRIPTS END
