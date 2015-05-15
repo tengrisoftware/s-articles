@@ -3,20 +3,23 @@
 
     <form>
       <div class="form-group">
-        <input type="text" data-ng-model="post" class="form-control">
+        <input type="text" data-ng-model="article" class="form-control">
       </div>
       <div class="form-group">
         <button class="btn btn-success"
-                data-ng-click="sendPost(post)"
+                data-ng-click="sendPost(article)"
                 type="button"
                 name="button">
           Send
         </button>
       </div>
     </form>
-
-    <div data-ng-repeat='post in posts'>
-      sgsrgergerg
-    </div>
+    <lo>
+      <div data-ng-repeat='article in articles'>
+        <li>
+          {{articles.article}}
+        </li>
+      </div>
+    </lo>
   </div>
 </div>

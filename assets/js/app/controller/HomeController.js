@@ -2,17 +2,21 @@
   'use strict';
 
   angular.module('Article')
-    .controller('HomeController'.HomeController);
+    .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$scope', 'Post'];
-  function HomeController($scope, Post) {
+  HomeController.$inject = ['$scope', 'Article'];
+  function HomeController($scope, Article) {
 
-    $scope.posts = Post.query();
-    $scope.post = "";
-    $scope.sendPost = function(post) {
-      var article  = new Post({post: post});
-      article.$save().then(function() {
-        console.log(12312312312321);
+    $scope.articles = Article.query();
+    $scope.article = "";
+
+    $scope.sendPost = function(articleData) {
+      console.log('first = '+articleData);
+      var article   = new Article({title: articleData, content: "123123"});
+
+      article.$save().then(function(newArticle) {
+        $scope.articles.push(newArticle);
+        console.log('save = '+newArticle);
       })
     }
 
