@@ -1,0 +1,12 @@
+extends ../layout
+
+block header
+  +header()
+block body
+  .container
+    div
+      h2 #{article,title}
+      .body #{article.content}
+
+block footer
+  +footer()

@@ -1,26 +1,28 @@
+include header.jade
+include footer.jade
+
 doctype html
 html
   head
-    title= title
-    // Viewport mobile tag for sensible mobile support
-    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+      title= title
+      // Viewport mobile tag for sensible mobile support
+      meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
 
-    block styles
+      block styles
       link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css")
-    //STYLES
-    link(rel="stylesheet", href="/styles/importer.css")
-    //STYLES END
+      //STYLES
+      link(rel="stylesheet", href="/styles/importer.css")
+      //STYLES END
 
-  body(data-ng-app='Article')
+  body
+    block header
 
     block body
-        // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
-    script(src= "/vendor/jquery/dist/jquery.min.js")
-    script(src= "/vendor/bootstrap/dist/js/bootstrap.min.js")
-    script(src= "/vendor/angular/angular.min.js")
-    script(src= "/vendor/angular-resource/angular-resource.min.js")
-    script(src= "/vendor/angular-route/angular-route.min.js")
 
+    block footer
+
+
+    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
     // SCRIPTS
     script(src="/js/dependencies/sails.io.js")
     script(src="/js/app/module.js")

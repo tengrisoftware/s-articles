@@ -1,4 +1,19 @@
 extends ./layout
+
+block header
+  +header()
+
 block body
   .container
-    div(data-ng-view="")
+    div
+      ul
+        each article in articles
+         li: div
+            h2 #{article,title}
+            div #{article.content}
+            a(href='/article/view/#{article.id}') More info.
+block footer
+  +footer()
+
+
+
