@@ -1,0 +1,27 @@
+extends ../layout
+block header
+  //+header()
+block body
+  .row Title:
+    .col-md-8.col-md-offset-2.well.well-sm
+      form(name="add_article", metod="post"
+            div
+            |
+            input.form-control(type='text', data-ng-model='article.title')
+          p
+            div Content:
+            |
+            input.form-control(type='text', data-ng-model='article.content')
+        |
+        .form-group
+          button.btn.btn-success(data-ng-click='sendPost(article)', type='button', name='button')
+            | Send
+
+block footer
+  +footer()
+
+
+
+
+
+
