@@ -9,16 +9,16 @@ block body
       .col-md-8.well
         div Form to add article:
           if (article)
-            form(name='add_article', method='post')
+            form(name='add_article', method='post', action="/article/edit")
               div Title :
                 span.label    :
                 input(type='text', name='title', value='#{article.title}')
               div
                 | Preview :
-                textarea(name='preview', cols='40', rows='3', value='#{article.preview}')
+                textarea(name='preview', cols='40', rows='3') #{article.preview}
               div
                 | Content :
-                textarea(name='content', cols='40', rows='5', value='#{article.content}')
+                textarea(name='content', cols='40', rows='5') #{article.content}
               div
                 button.btn.button(type='submit') Submit
           else

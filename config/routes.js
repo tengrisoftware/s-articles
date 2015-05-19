@@ -34,7 +34,8 @@ module.exports.routes = {
 
   '/': 'HomepageController.view',
   'get /article/add': 'ArticleController.edit',
-  'post /article/add': 'ArticleController.save'
+  'post /article/add': 'ArticleController.save',
+  'post /article/edit': 'ArticleController.save'
 
   /***************************************************************************
   *                                                                          *

@@ -51,7 +51,7 @@ module.exports = {
 
   //Save new article action
   save: function(req, res){
-    Article.create(req.params.all()).exec(function articleCreation(err, result) {
+    Article.findOrCreate(req.params.all()).exec(function articleCreation(err, result) {
       if (err) {
         return res.serverError(err);
       }
