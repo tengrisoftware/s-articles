@@ -27,7 +27,11 @@ module.exports = {
           article: result
         });
       });
-
+  },
+  //New article adding controller
+  add: function(req,res){
+    return res.ok();
+    //return res.addarticle();
   }
 };
 

@@ -1,17 +1,30 @@
 extends ./layout
 
 block header
-  +header()
+
 
 block body
   .container
-    div
-      ul
-        each article in articles
-         li: div
-            h2 #{article,title}
-            div #{article.content}
-            a(href='/article/view/#{article.id}') More info.
+    .row
+      .col-md-8
+        .row
+          .jumbotron
+            +header
+        .row
+          each article in articles
+            .col-md-4.well
+              h2 #{article, title}
+              div #{article.content}
+              div.text-right
+                a(href='/article/view/#{article.id}') More info.
+      .col-md-4.well
+        .row
+          div Categories:
+            .list-group
+              a.list-group-item(href= '/article/add/') Add new Article
+              a.list-group-item(href= 'http://localhost:1337/') Home
+
+
 block footer
   +footer()
 
