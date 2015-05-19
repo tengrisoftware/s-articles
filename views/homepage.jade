@@ -6,18 +6,20 @@ block header
 block body
   .container
     .row
+      .jumbotron
+        +header
       .col-md-8
-        .row
-          .jumbotron
-            +header
         .row
           each article in articles
             .col-md-4.well
               h4 #{article.title}
+              .text-right
+                | #{article.preview}
               div #{article.content}
-              div: a(href='/article/edit/#{article.id}') Edit
-              div.text-right
-                a(href='/article/view/#{article.id}') More info.
+              .text-right
+                a(href='/article/edit/#{article.id}') ||  Edit.   |
+                a(href='/article/del/#{article.id}') |   Delete.     |
+                a(href='/article/view/#{article.id}') |    More...    ||
       .col-md-4.well
         .row
           div Categories:

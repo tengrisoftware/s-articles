@@ -1,22 +1,44 @@
 extends ../layout
 block header
-  +header()
 
 block body
-  .row
-    .col-md-8.col-md-offset-2.well.well-sm
-      div Form to add article:
-        //|Chto za nah?
-      form(name='add_article', method='post')
-        div Title :
-          span.label      :
-          input(type='text', name='title', value='#{article.title}')
-        div
-          | Content :
-          textarea(name='content', cols='40', rows='5')
-        div
-          button.btn.button(type='submit') Submit
-
+  .container
+    .row
+      .jumbotron
+        +header()
+      .col-md-8.well
+        div Form to add article:
+          if (article)
+            form(name='add_article', method='post')
+              div Title :
+                span.label    :
+                input(type='text', name='title', value='#{article.title}')
+              div
+                | Preview :
+                textarea(name='preview', cols='40', rows='3', value='#{article.preview}')
+              div
+                | Content :
+                textarea(name='content', cols='40', rows='5', value='#{article.content}')
+              div
+                button.btn.button(type='submit') Submit
+          else
+            form(name='add_article', method='post')
+              div Title :
+                span.label    :
+                input(type='text', name='title')
+              div
+                | Preview :
+                textarea(name='preview', cols='40', rows='3')
+              div
+                | Content :
+                textarea(name='content', cols='40', rows='5')
+              div
+                button.btn.button(type='submit') Submit
+      .col-md-4.well
+          div Categories:
+            .list-group
+              a.list-group-item(href= '/article/add/') Add new Article
+              a.list-group-item(href= 'http://localhost:1337/') Home
 block footer
   +footer()
 
