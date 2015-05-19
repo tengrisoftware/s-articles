@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+  //Shows article page.
   view: function(req,res){
     var id = req.param('id');
 
@@ -14,8 +15,6 @@ module.exports = {
     }
 
     Article.findOne({id: req.param('id')})
-      .sort('createdAt DESC')
-      .limit(10)
       .exec(function(err, result) {
         if(err) {
           return res.serverError(err);
@@ -28,23 +27,36 @@ module.exports = {
         });
       });
   },
-  //New article adding controller
-  add: function(req,res){
-    if (req.method.toUpperCase()=='POST') {
-      Article.create(req.params.all()).exec(function articleCreation(err, result){
-        if (err) {
-          return res.serverError(err);
-        }
-        if (!result) {
-          return res.notFound();
-        }
-        console.log(result);
-        return res.redirectTo("/");
-      });
-    } else {
-      return res.serverError(404, 'POST - expected.');
+  //New:Edit article form.
+  edit: function(req,res) {
+    if (!req.params.id == null) {
+      Article.findOne({id: req.param('id')})
+        .exec(function (err, result) {
+          if (err) {
+            return res.serverError(err);
+          }
+          if (!result) {
+            return res.notFound();
+          }
+          return res.edit({
+            article: result
+          })
+        })
     }
-    return res.ok();
+    return res.view();
+  },
+
+  //Save new article action
+  save: function(req, res){
+    Article.create(req.params.all()).exec(function articleCreation(err, result) {
+      if (err) {
+        return res.serverError(err);
+      }
+      if (!result) {
+        return res.notFound();
+      }
+      return res.redirect('/article/view/'+result.id)
+    })
   }
 };
 

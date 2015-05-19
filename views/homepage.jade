@@ -15,6 +15,7 @@ block body
             .col-md-4.well
               h4 #{article.title}
               div #{article.content}
+              div: a(href='/article/edit/#{article.id}') Edit
               div.text-right
                 a(href='/article/view/#{article.id}') More info.
       .col-md-4.well
