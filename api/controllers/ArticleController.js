@@ -30,8 +30,21 @@ module.exports = {
   },
   //New article adding controller
   add: function(req,res){
+    if (req.method.toUpperCase()=='POST') {
+      Article.create(req.params.all()).exec(function articleCreation(err, result){
+        if (err) {
+          return res.serverError(err);
+        }
+        if (!result) {
+          return res.notFound();
+        }
+        console.log(result);
+        return res.redirectTo("/");
+      });
+    } else {
+      return res.serverError(404, 'POST - expected.');
+    }
     return res.ok();
-    //return res.addarticle();
   }
 };
 

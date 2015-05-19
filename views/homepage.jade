@@ -13,7 +13,7 @@ block body
         .row
           each article in articles
             .col-md-4.well
-              h2 #{article, title}
+              h4 #{article.title}
               div #{article.content}
               div.text-right
                 a(href='/article/view/#{article.id}') More info.
