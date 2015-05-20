@@ -37,6 +37,13 @@ module.exports = {
     publishedAt: {
       type: 'datetime'
     }
+  },
+
+  beforeCreate: function(values, cb) {
+    //console.log(values);
+    //values.cover.upload(function (err, uploadedFiles){
+    //  console.log(uploadedFiles);
+    //});
   }
 };
 

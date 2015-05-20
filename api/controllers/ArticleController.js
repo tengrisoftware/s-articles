@@ -51,6 +51,19 @@ module.exports = {
 
   //Save new article action
   save: function(req, res){
+    req.file('cover')
+      .upload({
+        dirname: 'uploads',
+        // You can apply a file upload limit (in bytes)
+        maxBytes: 1000000
+
+      }, function whenDone(err, uploadedFiles) {
+        if (err) return res.serverError(err);
+        else return res.json({
+          files: uploadedFiles,
+          textParams: req.params.all()
+        });
+      });
     Article.findOrCreate(req.params.all()).exec(function articleCreation(err, result) {
       if (err) {
         return res.serverError(err);

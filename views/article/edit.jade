@@ -9,7 +9,7 @@ block body
       .col-md-8.well
         div Form to add article:
           if (article)
-            form(name='add_article', method='post', action="/article/edit")
+            form(name='add_article', method='post', action="/article/edit", enctype='multipart/form-data')
               div Title :
                 span.label    :
                 input(type='text', name='title', value='#{article.title}')
@@ -22,10 +22,13 @@ block body
               div
                 button.btn.button(type='submit') Submit
           else
-            form(name='add_article', method='post')
+            form(name='add_article', method='post', enctype='multipart/form-data')
               div Title :
                 span.label    :
                 input(type='text', name='title')
+              div
+                | Cover:
+                input(type='file' name='cover')
               div
                 | Preview :
                 textarea(name='preview', cols='40', rows='3')
