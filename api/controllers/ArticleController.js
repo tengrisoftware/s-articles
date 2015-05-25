@@ -44,23 +44,24 @@ module.exports = {
 
 
   //Create new article action.
-  create: function(req,res) {
-    console.log(req.params.all());
-    Article.create(req.params.all()).exec(function articleCreated(err, result){
-      if (err){
-        return res.serverError();
-      };
-      console.log(result);
-      if(!result){
-        return res.notFound();
-      }
+  create: function(req, res) {
+    if( req.method == "POST") {
+      Article.create(req.params.all()).exec(function articleCreated(err, result){
+        console.log(result);
+        if (err){
+          return res.serverError();
+        };
+        if(!result){
+          return res.notFound();
+        }
 
-      return res.redirect('/article/view/',{
-        article: result
-      })
+        return res.redirect('/article/view/',{
+          article: result
+        })
+      });
+    }
 
-    });
-
+    return res.view();
     //var params = _.extend(req.query || {}, req.params.all || {}, req.body || {});
     //if((!params) || (params==null) || (_.keys(params).length==0)){
     //  return res.notFound();
