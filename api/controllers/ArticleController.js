@@ -6,14 +6,28 @@
  */
 
 module.exports = {
+  //Show all Articles page.
+  index: function(req, res){
+    Article.find().exec(function allArticles(err, result){
+      if(err) {
+        return res.serverError(err);
+      }
+      if (!result) { //no articles found
+        return res.notFound();
+      }
+      return res.view({  //return results to index.view
+        articles: result
+      });
+    })
+  },
+
   //Shows article page.
   view: function(req,res){
     var id = req.param('id');
 
-    if (!id) {
-      return res.redirect('/');
+    if (!id) {  //if no 'id' return error.
+      return res.notFound();
     }
-
     Article.findOne({id: req.param('id')})
       .exec(function(err, result) {
         if(err) {
@@ -28,49 +42,82 @@ module.exports = {
       });
   },
 
-  //New:Edit article form.
-  edit: function(req,res) {
+
+  //Create new article action.
+  createArticle: function(req,res) {
     var id = req.param('id');
 
-    if(!id){
-      return res.view()
+    if (!id){
+      return res.notFound();
     }
 
-    Article.findOne({id: req.param('id')}).exec(function (err, result) {
+    Article.create(req.params.all()).exec(function articleCreated(err, result){
+      if (err){
+        return res.serverError();
+      };
+      if(!result){
+        return res.notFound();
+      }
+
+      return res.view({
+        article: result
+      })
+
+    });
+
+    //var params = _.extend(req.query || {}, req.params.all || {}, req.body || {});
+    //if((!params) || (params==null) || (_.keys(params).length==0)){
+    //  return res.notFound();
+    //} else {
+    //  return res.json({
+    //      textParams: req.params.all()
+    //    });
+    //}
+  },
+
+  //Edit existing article
+  edit:function(req,res){
+    var id = req.param('id');
+
+    if (!id) {
+      return res.view;
+    } else {
+      Article.findOne({id: req.param('id')})
+        .exec(function (err, result) {
+          if (err) {
+            return res.serverError(err);
+          }
+          if (!result) {
+            return res.notFound();
+          }
+          return res.view({
+            article: result
+          });
+        });
+    }
+},
+
+  //Update existing article action
+  update: function(req, res){
+    //var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+    var id=params.id;
+    //return res.json({
+    //  textParams: req.params.all()
+    //});
+    if (!id) {
+      return res.notFound();
+    }
+
+    Article.update(req.params.all()).exec(function userCreated(err, result) {
       if (err) {
         return res.serverError(err);
       }
-      if (!result) {
+      if (!result) {0
         return res.notFound();
       }
       return res.view({
         article: result
       })
-    })
-  },
-
-  //Save new article action
-  save: function(req, res){
-    req.file('cover')
-      .upload({
-        dirname: 'uploads',
-        // You can apply a file upload limit (in bytes)
-        maxBytes: 1000000
-
-      }, function whenDone(err, uploadedFiles) {
-        if (err) return res.serverError(err);
-        else return res.json({
-          files: uploadedFiles,
-          textParams: req.params.all()
-        });
-      });
-    Article.findOrCreate(req.params.all()).exec(function articleCreation(err, result) {
-      if (err) {
-        return res.serverError(err);
-      }
-      if (!result) {
-        return res.notFound();
-      }
       return res.redirect('/article/view/'+result.id)
     })
   },

@@ -9,7 +9,7 @@ block body
       .col-md-8.well
         div Form to add article:
           if (article)
-            form(name='add_article', method='post', action="/article/edit", enctype='multipart/form-data')
+            form(name='add_article', method='post', action="/article/update}", enctype='multipart/form-data')
               div Title :
                 span.label    :
                 input(type='text', name='title', value='#{article.title}')
@@ -22,7 +22,8 @@ block body
               div
                 button.btn.button(type='submit') Submit
           else
-            form(name='add_article', method='post', enctype='multipart/form-data')
+              div Form to add article:
+            form(name='add_article', method='post', action='article/create', enctype='multipart/form-data')
               div Title :
                 span.label    :
                 input(type='text', name='title')
@@ -38,10 +39,7 @@ block body
               div
                 button.btn.button(type='submit') Submit
       .col-md-4.well
-          div Categories:
-            .list-group
-              a.list-group-item(href= '/article/add/') Add new Article
-              a.list-group-item(href= 'http://localhost:1337/') Home
+        +menu
 block footer
   +footer()
 

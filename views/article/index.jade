@@ -1,0 +1,31 @@
+extends ../layout
+
+block header
+block body
+  .container
+    .row
+      .jumbotron
+        +header
+      .col-md-8
+        h4 Articles list
+        .row
+          each article in articles
+            .col-md-12.well
+              .col-md-3.well
+                h4 Title
+                div: h5 #{article.title}
+              .col-md-3.well
+                h4 Preview:
+                div: h4 #{article.preview}
+              .col-md-3.well
+                h4 Content
+                div h5  #{article.content}
+              .col-md-3.well
+                .text-right
+                  div: a(href='/article/edit/#{article.id}') ||  Edit.   ||
+                  div: a(href='/article/edit/edit#{article.id}') ||   Delete.     ||
+                  div: a(href='/article/view/#{article.id}') ||   More...    ||
+      .col-md-4.well
+        +menu
+block footer
+  +footer()

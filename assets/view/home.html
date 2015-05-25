@@ -3,25 +3,17 @@
 
     <form>
       <div class="form-group">
-        <p/><div>Title:</div>
-        <input type="text" data-ng-model="article.title" class="form-control">
-        <p/><div>Content:</div>
-        <input type="text" data-ng-model="article.content" class="form-control">
+        <p/><div>Cover:</div>
+        <input type="cover" data-ng-model="attachment" class="form-control">
       </div>
       <div class="form-group">
         <button class="btn btn-success"
-                data-ng-click="sendPost(article)"
+                data-ng-click="sendPost(cover)"
                 type="button"
                 name="button">
-          Send
+          Upload
         </button>
       </div>
     </form>
-      <div data-ng-repeat='article in articles'>
-          {{article.title}}
-          <p>
-            {{article.content}}
-          </p>
-      </div>
   </div>
 </div>

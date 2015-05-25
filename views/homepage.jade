@@ -18,15 +18,11 @@ block body
               div #{article.content}
               .text-right
                 a(href='/article/edit/#{article.id}') ||  Edit.   |
-                a(href='/article/del/#{article.id}') |   Delete.     |
+                a(href='/article/delete/#{article.id}') |   Delete.     |
                 a(href='/article/view/#{article.id}') |    More...    ||
       .col-md-4.well
         .row
-          div Categories:
-            .list-group
-              a.list-group-item(href= '/article/add/') Add new Article
-              a.list-group-item(href= 'http://localhost:1337/') Home
-
+          +menu
 
 block footer
   +footer()
