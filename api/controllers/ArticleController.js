@@ -44,22 +44,18 @@ module.exports = {
 
 
   //Create new article action.
-  createArticle: function(req,res) {
-    var id = req.param('id');
-
-    if (!id){
-      return res.notFound();
-    }
-
+  create: function(req,res) {
+    console.log(req.params.all());
     Article.create(req.params.all()).exec(function articleCreated(err, result){
       if (err){
         return res.serverError();
       };
+      console.log(result);
       if(!result){
         return res.notFound();
       }
 
-      return res.view({
+      return res.redirect('/article/view/',{
         article: result
       })
 
@@ -80,22 +76,21 @@ module.exports = {
     var id = req.param('id');
 
     if (!id) {
-      return res.view;
-    } else {
-      Article.findOne({id: req.param('id')})
-        .exec(function (err, result) {
-          if (err) {
-            return res.serverError(err);
-          }
-          if (!result) {
-            return res.notFound();
-          }
-          return res.view({
-            article: result
-          });
-        });
+      return res.view();
     }
-},
+    Article.findOne({id: req.param('id')})
+      .exec(function (err, result) {
+        if (err) {
+          return res.serverError(err);
+        }
+        if (!result) {
+          return res.notFound();
+        }
+        return res.view({
+          article: result
+        });
+      });
+  },
 
   //Update existing article action
   update: function(req, res){

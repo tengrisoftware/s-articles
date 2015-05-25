@@ -7,23 +7,23 @@ block body
       .jumbotron
         +header()
       .col-md-8.well
-        div Form to add article:
-          if (article)
-            form(name='add_article', method='post', action="/article/update}", enctype='multipart/form-data')
-              div Title :
-                span.label    :
-                input(type='text', name='title', value='#{article.title}')
-              div
-                | Preview :
-                textarea(name='preview', cols='40', rows='3') #{article.preview}
-              div
-                | Content :
-                textarea(name='content', cols='40', rows='5') #{article.content}
-              div
-                button.btn.button(type='submit') Submit
-          else
-              div Form to add article:
-            form(name='add_article', method='post', action='article/create', enctype='multipart/form-data')
+        if (article)
+          div Form to edit article:
+              form(name='edit_article', method='post', action="/article/update", enctype='multipart/form-data')
+                div Title :
+                  span.label    :
+                  input(type='text', name='title', value='#{article.title}')
+                div
+                  | Preview :
+                  textarea(name='preview', cols='40', rows='3') #{article.preview}
+                div
+                  | Content :
+                  textarea(name='content', cols='40', rows='5') #{article.content}
+                div
+                  button.btn.button(type='submit') Submit
+        else
+          div Form to add article:
+            form(name='add_article', method='post', action='/article/create', enctype='multipart/form-data')
               div Title :
                 span.label    :
                 input(type='text', name='title')
