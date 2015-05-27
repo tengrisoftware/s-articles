@@ -9,7 +9,7 @@ block body
       .col-md-8.well
         if (article)
           div Form to edit article:
-              form(name='edit_article', method='post', action="/article/update", enctype='multipart/form-data')
+              form(name='edit_article', method='post', action="/article/create", enctype='multipart/form-data')
                 div Title :
                   span.label    :
                   input(type='text', name='title', value='#{article.title}')
@@ -27,9 +27,6 @@ block body
               div Title :
                 span.label    :
                 input(type='text', name='title')
-              div
-                | Cover:
-                input(type='file' name='cover')
               div
                 | Preview :
                 textarea(name='preview', cols='40', rows='3')
