@@ -47,7 +47,7 @@ module.exports = {
     if( req.method.toUpperCase() == "POST") {
       Article.create(req.params.all()).exec(function(err, result){
         if (err){
-          return res.serverError();
+          return res.serverError(err);
         };
         if(!result){
           return res.notFound();
@@ -64,7 +64,7 @@ module.exports = {
     var id = req.param('id');
 
     if (!id) {
-      return res.view();
+      return res.notFound();
     }
     Article.findOne({id: req.param('id')})
       .exec(function (err, result) {
@@ -74,35 +74,22 @@ module.exports = {
         if (!result) {
           return res.notFound();
         }
-        return res.view({
-          article: result
-        });
+        if (req.method.toUpperCase() == "POST") {
+          result.title = req.param('title');
+          result.content = req.param('content');
+          result.preview = req.param('preview');
+          result.save(function saveArticle(err) {
+            if (err) {
+              return res.serverError(err);
+            }
+            return res.redirect('/article/view/'+result.id)
+          });
+        } else {
+          return res.view({
+            article: result
+          });
+        }
       });
-  },
-
-  //Update existing article action
-  update: function(req, res){
-    //var params = _.extend(req.query || {}, req.params || {}, req.body || {});
-    var id=params.id;
-    //return res.json({
-    //  textParams: req.params.all()
-    //});
-    if (!id) {
-      return res.notFound();
-    }
-
-    Article.update(req.params.all()).exec(function userCreated(err, result) {
-      if (err) {
-        return res.serverError(err);
-      }
-      if (!result) {0
-        return res.notFound();
-      }
-      return res.view({
-        article: result
-      })
-      return res.redirect('/article/view/'+result.id)
-    })
   },
 
   //Delete existing article
@@ -121,7 +108,9 @@ module.exports = {
       if (!result) {
         return res.notFound();
       }
-      return res.redirect('/')
+      //var backURL = req.header('Referer') || '/';
+      //return res.redirect(backURL);
+      return res.redirect('/article/index')
     })
   }
 };
