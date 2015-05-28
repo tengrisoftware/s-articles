@@ -22,7 +22,23 @@ module.exports = {
   //    });
   //  });
   upload: function(req, res) {
-    return res.json({'status':true});
+    //return res.json({
+    //  message: req.param('file')
+    //});
+
+    console.log('enter');
+
+    req.file('files').upload(function (err, uploadedFiles){
+      if (err) {
+        console.log('error');
+        return res.serverError(err);
+      }
+      console.log('return');
+      return res.json({
+        message: uploadedFiles.length + 'file(s) uploaded successfully',
+        files: uploadedFiles
+      })
+    })
   }
 };
 
