@@ -6,35 +6,21 @@
  */
 
 module.exports = {
-  //console.log(req.file("cover"));
-  //req.file('cover')
-  //  .upload({
-  //    // Specify the directory for uploaded files
-  //    dirname: 'uploads',
-  //    // You can apply a file upload limit (in bytes)
-  //    maxBytes: 1000000
-  //
-  //  }, function whenDone(err, uploadedFiles) {
-  //    if (err) return res.serverError(err);
-  //    else return res.json({
-  //      files: uploadedFiles,
-  //      textParams: req.params.all()
-  //    });
-  //  });
+
   upload: function(req, res) {
-    //return res.json({
-    //  message: req.param('file')
-    //});
 
-    console.log('enter');
-
-    req.file('files').upload(function (err, uploadedFiles){
+    req.file('files')
+      .upload({
+        dirname: '/uploads',
+        maxBytes: 1000000,
+        saveAs: function (_newFileStream,cb){
+          cb(null, 'cover.jpg');
+        }
+      },function (err, uploadedFiles){
       if (err) {
-        console.log('error');
         return res.serverError(err);
       }
-      console.log('return');
-      return res.json({
+      return res.json({  //типа получил я файлы и все ок. дальше вместо ретюрна нужно сказать ему куда их сложить.
         message: uploadedFiles.length + 'file(s) uploaded successfully',
         files: uploadedFiles
       })
