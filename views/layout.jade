@@ -23,11 +23,11 @@ html
     block footer
 
 
-    script src="/bower_components/angular/angular.js"
+    script(src="/vendor/angular/angular.min.js")
 
     <!--only needed if you support non HTML5 FormData browsers.-->
-    script src="/bower_components/angular/angular-file-upload-shim.js"
-    script src="/bower_components/angular/angular-file-upload.js"
+    script(src="/vendor/ng-file-upload/ng-file-upload-shim.js")
+    script(src="/vendor/ng-file-upload/ng-file-upload.js")
     // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
     // SCRIPTS
     script(src="/js/dependencies/sails.io.js")

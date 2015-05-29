@@ -21,5 +21,8 @@ module.exports = {
   //      textParams: req.params.all()
   //    });
   //  });
+  upload: function(req, res) {
+    return res.json({'status':true});
+  }
 };
 
