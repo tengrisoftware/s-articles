@@ -15,7 +15,7 @@
         if(files && files.length){
           for(var i=0; i< files.length; i++){
             var file = files[i];
-            console.log('call upload at angular controller');
+            console.log(file, 'call upload at angular controller');
             Upload.upload({
                 url: '/attachment/upload',
                 fields: {

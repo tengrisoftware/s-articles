@@ -4,24 +4,28 @@
  * @description :: Server-side logic for managing Attachments
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+var mime = require('mime');
 
 module.exports = {
 
   upload: function(req, res) {
-
-    req.file('files')
+    //console.log(req.file('files'));
+    req.file('file')
       .upload({
-        dirname: '/uploads',
+        dirname: 'uploads',
         maxBytes: 1000000,
         saveAs: function (_newFileStream,cb){
-          cb(null, 'cover.jpg');
+          var high = 100000;
+          var low  = 999999;
+          cb(null, (Math.random() * (high - low) + low) + '.' + mime.extension(_newFileStream.headers['content-type']));
         }
       },function (err, uploadedFiles){
       if (err) {
         return res.serverError(err);
       }
-      return res.json({  //типа получил я файлы и все ок. дальше вместо ретюрна нужно сказать ему куда их сложить.
-        message: uploadedFiles.length + 'file(s) uploaded successfully',
+
+      return res.json({
+        message: uploadedFiles.length + ' file(s) uploaded successfully',
         files: uploadedFiles
       })
     })
