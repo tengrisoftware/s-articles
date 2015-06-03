@@ -1,21 +1,29 @@
 (function fileUpload(angular){
-  //ToDO: Files upload functional should be here, somebody please write it!!!
+  //ToDO: Angular application should work like a directive, to allow us use it several times on the same page.
   'use strict';
 
-  console.log('FileUpload function - enter');
   var app = angular.module('FileUploader', ['ngFileUpload']);
   app.controller('fileController', ['$scope', 'Upload', function($scope, Upload){
-      console.log('scope watch - enter');
+      $scope.cover=[];
       $scope.$watch('files', function(){
         $scope.upload($scope.files);
-        console.log('call scope.upload 1111');
       });
+      $scope.$watchCollection('cover', function (){
+        var s = '';
+        for (var i in $scope.cover){
+          console.log('i = ');
+          console.log(i);
+          s += $scope.cover[i].id+',';
+        }
+        $scope.covers = s;
+        console.log(s);
+      })
 
       $scope.upload = function(files){
         if(files && files.length){
           for(var i=0; i< files.length; i++){
             var file = files[i];
-            console.log(file, 'call upload at angular controller');
+            //console.log(file, 'call upload at angular controller');
             Upload.upload({
                 url: '/attachment/upload',
                 fields: {
@@ -26,14 +34,14 @@
               var progressPercentage = parseInt(100.0*evt.loaded/evt.total);
               console.log('progress :' + progressPercentage + "%  " + evt.config.file.name)
             }).success(function (data, status, headers, config) {
+              $scope.cover.push(data.files[0]);
+              console.log($scope.cover);
               console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
             });
           }
         }
       }
-        }
-      ]
-    )
+    }])
     //.directive('imgUpload', function(){
     //  return{
     //    template: "<div>Image tage upload</div>"

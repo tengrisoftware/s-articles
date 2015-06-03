@@ -20,13 +20,13 @@ block body
               textarea(name='content', cols='40', rows='5') #{article.content}
             div(data-ng-controller='fileController')
               input(type='hidden', data-ng-model='fileType', value='cover')
+              input(type='hidden', data-ng-model='covers', name='cover', value='')
               div(ngf-drop, ngf-select, ng-model="files", class="drop-box",
                 ngf-drag-over-class="dragover", ngf-multiple="true", ngf-allow-dir="true",
-                accept="image/*") Drop pdfs or images here or click to upload
+                accept="image/*") Drop only 1 image here or click to upload
                 ul
                   li(ng-repeat="f in files", style="font:smaller") {{f.name}}
               img(ngf-src="files[0]", ngf-default-src="'/thumb.jpg'", ngf-accept="'image/*'")
-
 
             div
               button.btn.button(type='submit') Submit
