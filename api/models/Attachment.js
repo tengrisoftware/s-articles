@@ -11,13 +11,20 @@
 module.exports = {
 
   attributes: {
-    type: {
+    name: {
       type: 'string',
       required: true
     },
     source: {
       type: 'string',
       required: true
+    },
+    type: {
+      type: 'string',
+      required: true
+    },
+    thumb: {
+      type: 'string'
     }
   }
 };

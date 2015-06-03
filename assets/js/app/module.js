@@ -11,12 +11,9 @@
       $scope.$watchCollection('cover', function (){
         var s = '';
         for (var i in $scope.cover){
-          console.log('i = ');
-          console.log(i);
           s += $scope.cover[i].id+',';
         }
         $scope.covers = s;
-        console.log(s);
       })
 
       $scope.upload = function(files){

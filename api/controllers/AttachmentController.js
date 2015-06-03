@@ -5,14 +5,19 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 var mime = require('mime');
+var dateFormat = require('dateformat');
 
 module.exports = {
 
   upload: function(req, res) {
-    //console.log(req.file('files'));
+    var path = global.appRoot;
+    var dirName = new Date();
+    var globalPath = sails.config.appPath;
+    dirName = globalPath+ '/assets/uploads/'   + dateFormat(dirName, 'yyyy/mm/dd');
+
     req.file('file')
       .upload({
-        dirname: 'uploads',
+        dirname: dirName,
         maxBytes: 1000000,
         saveAs: function (_newFileStream,cb){
           var high = 100000;
@@ -20,15 +25,27 @@ module.exports = {
           cb(null, (Math.random() * (high - low) + low) + '.' + mime.extension(_newFileStream.headers['content-type']));
         }
       },function (err, uploadedFiles){
-      if (err) {
-        return res.serverError(err);
-      }
+        if (err) {
+          return res.negotiate(err);
+        }
 
-      return res.json({
-        message: uploadedFiles.length + ' file(s) uploaded successfully',
-        files: uploadedFiles
+        var attachment = [];
+        attachment.name = uploadedFiles[0].filename;
+          attachment.source = uploadedFiles[0].fd;
+          attachment.type = uploadedFiles[0].type;
+          attachment.thumb = '';
+
+        Attachment.create(attachment).exec(function (err, result) {
+          if (err) {
+            return res.serverError(err);
+          }
+
+        })
       })
-    })
+      //return res.json({
+      //  message: uploadedFiles.length + ' file(s) uploaded successfully',
+      //  files: uploadedFiles
+      //})
   }
 };
 
