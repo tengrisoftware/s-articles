@@ -39,7 +39,9 @@ module.exports = {
           if (err) {
             return res.serverError(err);
           }
-
+          return res.json({
+            id:result.id
+          })
         })
       })
       //return res.json({
