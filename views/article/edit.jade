@@ -8,7 +8,7 @@ block body
         +header()
       .col-md-8.well
         div Form to edit article:
-          form(name='edit_article', method='post', action="/article/edit/#{article.id}", enctype='multipart/form-data')
+          form(name='edit_article', method='post', action="/article/edit/#{article.id}")
             div Title :
               span.label :
               input(type='text', name='title', value='#{article.title}')
@@ -19,8 +19,8 @@ block body
               | Content :
               textarea(name='content', cols='40', rows='5') #{article.content}
             div(data-ng-controller='fileController')
-              input(type='hidden', data-ng-model='fileType', value='cover')
-              input(type='hidden', data-ng-model='covers', name='cover', value='')
+              //input(type='hidden', data-ng-model='fileType', value='cover')
+              input(type='hidden', data-ng-model='cover', name='cover', value='{{cover}}')
               div(ngf-drop, ngf-select, ng-model="files", class="drop-box",
                 ngf-drag-over-class="dragover", ngf-multiple="true", ngf-allow-dir="true",
                 accept="image/*") Drop only 1 image here or click to upload

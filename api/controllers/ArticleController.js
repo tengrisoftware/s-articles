@@ -77,7 +77,7 @@ module.exports = {
           result.title = req.param('title');
           result.content = req.param('content');
           result.preview = req.param('preview');
-          //result.cover = req.param('cover');
+          result.cover = req.param('cover');
           result.save(function saveArticle(err) {
             if (err) {
               return res.serverError(err);

@@ -10,10 +10,7 @@ var dateFormat = require('dateformat');
 module.exports = {
 
   upload: function(req, res) {
-    var path = global.appRoot;
-    var dirName = new Date();
-    var globalPath = sails.config.appPath;
-    dirName = globalPath+ '/assets/uploads/'   + dateFormat(dirName, 'yyyy/mm/dd');
+    var dirName = sails.config.appPath+ '/assets/uploads/'   + dateFormat(new Date(), 'yyyy/mm/dd');
 
     req.file('file')
       .upload({
@@ -29,18 +26,17 @@ module.exports = {
           return res.negotiate(err);
         }
 
-        var attachment = [];
+        var attachment = {};
         attachment.name = uploadedFiles[0].filename;
           attachment.source = uploadedFiles[0].fd;
           attachment.type = uploadedFiles[0].type;
           attachment.thumb = '';
-
         Attachment.create(attachment).exec(function (err, result) {
           if (err) {
             return res.serverError(err);
           }
           return res.json({
-            id:result.id
+            id: result.id
           })
         })
       })
