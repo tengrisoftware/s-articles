@@ -7,6 +7,11 @@
     }])
     .directive('imgUpload', ['Upload', function(Upload){
       return{
+        scope: {
+          ngModel: "=",
+          name: "@",
+          cover:"="
+        },
         templateUrl: function(elem, attr) {
           console.log(attr.template);
           return "/js/template/" + attr.template + "Upload.html";
@@ -16,21 +21,21 @@
             $scope.upload($scope.files);
           });
 
-          //$scope.$watchCollection('cover', function (){
-          //  var s = $scope.cover.join(',');
-          //  //for (var i in $scope.cover){
-          //  //  s += $scope.cover[i].id+',';
-          //  //}
-          //  //$scope.covers = s;
-          //  console.log(s);
-          //})
+          $scope.$watchCollection('files', function (){
+            var s = $scope.files.join(',');
+            //for (var i in $scope.cover){
+            //  s += $scope.cover[i].id+',';
+            //}
+            $scope.attachments = s;
+            console.log(s);
+          })
 
 
           $scope.upload = function(files){
             if(files && files.length){
               for(var i=0; i< files.length; i++){
                 var file = files[i];
-                //console.log(file, 'call upload at angular controller');
+                console.log(file, 'call upload at angular controller');
                 Upload.upload({
                   url: '/attachment/upload',
                   fields: {
@@ -42,15 +47,18 @@
                   console.log('progress :' + progressPercentage + "%  " + evt.config.file.name)
                 }).success(function (data, status, headers, config) {
                   if (data) {
-                    if(attr.template == "img") {
-                      $scope.cover = data.id;
-                    } else {
-
-                    }
+                    //if(attr.template == "img") {
+                      $scope.files = data.id;
+                    //} elseif(attr.template == "video")
+                    //{
+                    //
+                    //}
+                    //
+                    //}
                   }
                   $scope.$apply();
-                  console.log($scope.cover);
-                  //console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
+                  console.log($scope.files);
+                  console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
                 });
               }
             }

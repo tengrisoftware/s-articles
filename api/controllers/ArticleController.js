@@ -36,6 +36,8 @@ module.exports = {
         if (!result) {
           return res.notFound();
         }
+        console.log(result);
+        console.log(result.source);
         return res.view({
           article: result
         });

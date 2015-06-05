@@ -25,9 +25,9 @@ module.exports = {
         if (err) {
           return res.negotiate(err);
         }
-
+        console.log(uploadedFiles);
         var attachment = {};
-        attachment.name = uploadedFiles[0].filename;
+          attachment.name = uploadedFiles[0].filename;
           attachment.source = uploadedFiles[0].fd;
           attachment.type = uploadedFiles[0].type;
           attachment.thumb = '';

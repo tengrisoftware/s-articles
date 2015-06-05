@@ -9,6 +9,7 @@ block body
     .col-md-8.well
       div
         h2 #{article.title}
+        img(src='#{article.cover.source}')
         .preview #{article.preview}
           hr
         .body #{article.content}
