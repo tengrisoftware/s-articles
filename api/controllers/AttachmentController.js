@@ -25,12 +25,19 @@ module.exports = {
         if (err) {
           return res.negotiate(err);
         }
+        if(!uploadedFiles) {
+          console.log("Empty Uploaded Files list!")
+          return null;
+
+        }
         console.log(uploadedFiles);
         var attachment = {};
           attachment.name = uploadedFiles[0].filename;
           attachment.source = uploadedFiles[0].fd;
           attachment.type = uploadedFiles[0].type;
           attachment.thumb = '';
+
+        console.log(attachment);
         Attachment.create(attachment).exec(function (err, result) {
           if (err) {
             return res.serverError(err);

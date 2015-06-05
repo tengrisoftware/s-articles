@@ -9,8 +9,9 @@
       return{
         scope: {
           ngModel: "=",
-          name: "@",
-          cover:"="
+          name: "=",
+          cover:"=",
+          attachments:"="
         },
         templateUrl: function(elem, attr) {
           console.log(attr.template);
@@ -22,12 +23,12 @@
           });
 
           $scope.$watchCollection('files', function (){
-            var s = $scope.files.join(',');
+            var s = $scope.attachments.join(',');
             //for (var i in $scope.cover){
             //  s += $scope.cover[i].id+',';
             //}
-            $scope.attachments = s;
-            console.log(s);
+            //$scope.attachments = s;
+            //console.log(s);
           })
 
 
