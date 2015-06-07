@@ -12,6 +12,8 @@ block body
             div Title :
               span.label :
               input(type='text', name='title', value='#{article.title}')
+              div(data-ng-controller='fileController')
+              div(data-img-upload, template='cover')
             div
               | Preview :
               textarea(name='preview', cols='40', rows='3') #{article.preview}

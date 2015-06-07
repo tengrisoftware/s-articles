@@ -36,8 +36,8 @@ module.exports = {
         if (!result) {
           return res.notFound();
         }
-        console.log(result);
-        console.log(result.source);
+        //console.log(result);
+        //console.log(result.source);
         return res.view({
           article: result
         });
@@ -68,6 +68,7 @@ module.exports = {
       return res.notFound();
     }
     Article.findOne({id: req.param('id')})
+      .populate('cover')
       .exec(function (err, result) {
         if (err) {
           return res.serverError(err);
@@ -75,11 +76,18 @@ module.exports = {
         if (!result) {
           return res.notFound();
         }
+        console.log(req.params.all());
+
         if (req.method.toUpperCase() == "POST") {
           result.title = req.param('title');
           result.content = req.param('content');
           result.preview = req.param('preview');
           result.cover = req.param('cover');
+
+         console.log(" result: = ", result);
+         console.log(" result.cover: = ", result.cover);
+         //return res.ok;
+
           result.save(function saveArticle(err) {
             if (err) {
               return res.serverError(err);

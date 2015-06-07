@@ -10,7 +10,7 @@
         scope: {
           ngModel: "=",
           name: "=",
-          cover:"="
+          cover:"&"
           //attachments:"=bind"
         },
         templateUrl: function(elem, attr) {
@@ -19,6 +19,7 @@
         },
         link: function($scope, element, attr){
           $scope.attachments = [];
+          //$scope.cover = '';
           $scope.$watch('files', function(){
             $scope.upload($scope.files);
           });
@@ -50,18 +51,35 @@
                   console.log('progress :' + progressPercentage + "%  " + evt.config.file.name)
                 }).success(function (data, status, headers, config) {
                   if (data) {
-                    //if(attr.template == "img") {
-                    //} elseif(attr.template == "video")
+                    switch(attr.template) {
+                      case "img":
+                        console.log("IMG - attr working!");
+                        $scope.attachments.push(data.id);
+                            break;
+                      case "video":
+                        console.log("VIDEO - attr working!");
+                        $scope.attachments.push(data.id);
+                            break;
+                      case "cover":
+                        console.log("COVER - attr working!");
+                        $scope.cover = data.id;
+                            break;
+                      default:
+                        console.log("NO ATTR specified!!!!");
+                        $scope.attachments.push("ERR, NO ATTR specified!!!!");
+
+                    //} elseif(attr.template == 'cover')
                     //{
                     //
                     //}
+                    //elseif(attr.template == "video")
+                    //{
                     //
-                    //}
-                    //$scope.$apply(function(){
-                      $scope.attachments.push(data.id);
-                    //});
-                  }
-                  console.log($scope.attachments);
+                    }
+
+                  };
+                  console.log("$scope.attachments = ", $scope.attachments);
+                  console.log("$scope.cover = ", $scope.cover);
                   console.log('file ' + config.file.name + ' uploaded. Response: ', data);
                 });
               }
