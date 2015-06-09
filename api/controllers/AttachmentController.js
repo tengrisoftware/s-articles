@@ -23,22 +23,22 @@ module.exports = {
         }
       },function (err, uploadedFiles){
         if (err) {
-          return res.negotiate(err);
+          return res.serverError(err);
         }
-        if(!uploadedFiles) {
-          console.log("Empty Uploaded Files list!")
-          return null;
+        if(!uploadedFiles.length) {
+          console.log("Empty Uploaded Files list!");
+          return res.serverError("Empty Uploaded Files list!");
 
         }
-        console.log(uploadedFiles);
-        var attachment = {};
-          attachment.name = uploadedFiles[0].filename;
-          attachment.source = uploadedFiles[0].fd;
-          attachment.type = uploadedFiles[0].type;
-          attachment.thumb = '';
+        //console.log(uploadedFiles);
+        var attach = {};
+          attach.name = uploadedFiles[0].filename;
+          attach.source = uploadedFiles[0].fd;
+          attach.type = uploadedFiles[0].type;
+          attach.thumb = '';
 
-        console.log(attachment);
-        Attachment.create(attachment).exec(function (err, result) {
+        //console.log(attachment);
+        Attachment.create(attach).exec(function (err, result) {
           if (err) {
             return res.serverError(err);
           }

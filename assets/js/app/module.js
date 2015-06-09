@@ -10,26 +10,28 @@
         scope: {
           ngModel: "=",
           name: "=",
-          cover:"=",
-          attachments:"="
+          cover:"="
+          //attachments:"=bind"
         },
         templateUrl: function(elem, attr) {
           console.log(attr.template);
           return "/js/template/" + attr.template + "Upload.html";
         },
         link: function($scope, element, attr){
+          $scope.attachments = [];
           $scope.$watch('files', function(){
             $scope.upload($scope.files);
           });
 
-          $scope.$watchCollection('files', function (){
-            var s = $scope.attachments.join(',');
-            //for (var i in $scope.cover){
-            //  s += $scope.cover[i].id+',';
-            //}
-            //$scope.attachments = s;
-            //console.log(s);
-          })
+          //$scope.$watchCollection('attachments', function (){
+          //  console.log($scope.attachments);
+          //  var s = $scope.attachments.join(',');
+          //  //for (var i in $scope.cover){
+          //  //  s += $scope.cover[i].id+',';
+          //  //}
+          //  //$scope.attachments = s;
+          //  console.log($scope.attachments);
+          //})
 
 
           $scope.upload = function(files){
@@ -49,17 +51,18 @@
                 }).success(function (data, status, headers, config) {
                   if (data) {
                     //if(attr.template == "img") {
-                      $scope.files = data.id;
                     //} elseif(attr.template == "video")
                     //{
                     //
                     //}
                     //
                     //}
+                    //$scope.$apply(function(){
+                      $scope.attachments.push(data.id);
+                    //});
                   }
-                  $scope.$apply();
-                  console.log($scope.files);
-                  console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
+                  console.log($scope.attachments);
+                  console.log('file ' + config.file.name + ' uploaded. Response: ', data);
                 });
               }
             }

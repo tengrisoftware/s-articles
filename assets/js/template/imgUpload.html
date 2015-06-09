@@ -1,4 +1,6 @@
-<input type="hidden" data-ng-model="files" name="files" value="{{attachments}}"/>
+<div data-ng-repaet="attachment in attachments">
+  <input type="hidden" name="attachment[{{$index}}]" value="{{attachment}}" />
+</div>
 <div ngf-drop="ngf-drop" ngf-select="ngf-select" ng-model="files" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" accept="image/*" class="drop-box">
   Drop only 1 image here or click to upload
 </div>
