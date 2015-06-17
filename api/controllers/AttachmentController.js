@@ -10,7 +10,9 @@ var dateFormat = require('dateformat');
 module.exports = {
 
   upload: function(req, res) {
-    var dirName = sails.config.appPath+ '/assets/uploads/'   + dateFormat(new Date(), 'yyyy/mm/dd');
+    var filePath = '/uploads/'   + dateFormat(new Date(), 'yyyy/mm/dd');
+    var dirName = sails.config.appPath+ '/assets' + filePath;
+    var fileName;
 
     req.file('file')
       .upload({
@@ -19,7 +21,8 @@ module.exports = {
         saveAs: function (_newFileStream,cb){
           var high = 100000;
           var low  = 999999;
-          cb(null, (Math.random() * (high - low) + low) + '.' + mime.extension(_newFileStream.headers['content-type']));
+          fileName = (Math.random() * (high - low) + low) + '.' + mime.extension(_newFileStream.headers['content-type']);
+          cb(null, fileName);
         }
       },function (err, uploadedFiles){
         if (err) {
@@ -30,10 +33,9 @@ module.exports = {
           return res.serverError("Empty Uploaded Files list!");
 
         }
-        //console.log(uploadedFiles);
         var attach = {};
           attach.name = uploadedFiles[0].filename;
-          attach.source = uploadedFiles[0].fd;
+          attach.source = filePath + '/' + fileName;
           attach.type = uploadedFiles[0].type;
           attach.thumb = '';
 

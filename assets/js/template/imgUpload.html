@@ -1,5 +1,5 @@
-<div data-ng-repaet="attachment in attachments">
-  <input type="hidden" name="attachment" value="{{attachments}}" />
+<div>
+  <input ng-repeat="attachment in attachments" type="hidden" name="attachments[]" value="{{attachment}}" />
 </div>
 <div ngf-drop="ngf-drop" ngf-select="ngf-select" ng-model="files" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" accept="image/*" class="drop-box">
   Drop only 1 image here or click to upload
@@ -7,4 +7,6 @@
 <ul>
   <li ng-repeat="f in files">{{f.name}}</li>
 </ul>
-<img ngf-src="files[0]" ngf-default-src="/thumb.jpg" ngf-accept="'image/*'"/>
+<div ng-repeat="f in files">
+  <img ngf-src="files[{{$index}}]" ngf-default-src="/thumb.jpg" ngf-accept="'image/*'"/>
+</div>

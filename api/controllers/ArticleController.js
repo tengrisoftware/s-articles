@@ -29,6 +29,7 @@ module.exports = {
       return res.notFound();
     }
     Article.findOne({id: req.param('id')})
+      .populate('cover')
       .exec(function(err, result) {
         if(err) {
           return res.serverError(err);
@@ -83,6 +84,7 @@ module.exports = {
           result.content = req.param('content');
           result.preview = req.param('preview');
           result.cover = req.param('cover');
+          result.attachments = req.param('attachments');
 
          console.log(" result: = ", result);
          console.log(" result.cover: = ", result.cover);

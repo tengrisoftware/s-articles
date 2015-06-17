@@ -36,6 +36,10 @@ module.exports = {
     },
     publishedAt: {
       type: 'datetime'
+    },
+    attachments: {
+      type: 'collection',
+      model: 'Attachment'
     }
   }
 };
