@@ -39,7 +39,7 @@
             if(files && files.length){
               for(var i=0; i< files.length; i++){
                 var file = files[i];
-                console.log(file, 'call upload at angular controller');
+                //console.log(file, 'call upload at angular controller');
                 Upload.upload({
                   url: '/attachment/upload',
                   fields: {
@@ -78,9 +78,9 @@
                     }
 
                   };
-                  console.log("$scope.attachments = ", $scope.attachments);
-                  console.log("$scope.cover = ", $scope.cover);
-                  console.log('file ' + config.file.name + ' uploaded. Response: ', data);
+                  //console.log("$scope.attachments = ", $scope.attachments);
+                  //console.log("$scope.cover = ", $scope.cover);
+                  //console.log('file ' + config.file.name + ' uploaded. Response: ', data);
                 });
               }
             }

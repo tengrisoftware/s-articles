@@ -47,18 +47,33 @@ module.exports = {
 
   //Create new article action.
   create: function(req, res) {
+
+    console.log('request : ', req.body);
+
     if( req.method.toUpperCase() == "POST") {
-      Article.create(req.params.all()).exec(function(err, result){
+      var art = {
+        title : req.param('title'),
+        content : req.param('content'),
+        preview : req.param('preview'),
+        cover : req.param('cover'),
+        attachments : req.param('attachments'),
+      };
+
+      console.log('art : ', art);
+
+      Article.create(art).exec(function(err, result){
         if (err){
           return res.serverError(err);
         };
+        console.log('result : ', result);
+
         if(!result){
           return res.notFound();
         }
         return res.redirect('/article/view/'+result.id)
       });
     } else {
-      return res.view();
+      return res.redirect('/article/edit');
     }
   },
 
@@ -66,7 +81,7 @@ module.exports = {
   edit:function(req,res){
     var id = req.param('id');
     if (!id) {
-      return res.notFound();
+      return res.view();
     }
     Article.findOne({id: req.param('id')})
       .populate('cover')
@@ -77,7 +92,7 @@ module.exports = {
         if (!result) {
           return res.notFound();
         }
-        console.log(req.params.all());
+        //console.log(req.params.all());
 
         if (req.method.toUpperCase() == "POST") {
           result.title = req.param('title');
@@ -87,7 +102,7 @@ module.exports = {
           result.attachments = req.param('attachments');
 
          console.log(" result: = ", result);
-         console.log(" result.cover: = ", result.cover);
+         //console.log(" result.cover: = ", result.cover);
          //return res.ok;
 
           result.save(function saveArticle(err) {

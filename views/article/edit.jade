@@ -7,25 +7,45 @@ block body
       .jumbotron
         +header()
       .col-md-8.well
-        div Form to edit article:
-          form(name='edit_article', method='post', action="/article/edit/#{article.id}")
-            div Title :
-              span.label :
-              input(type='text', name='title', value='#{article.title}')
+        if (article)
+          div Form to edit article:
+            form(name='edit_article', method='post', action="/article/edit/#{article.id}")
+              div Title :
+                span.label :
+                input(type='text', name='title', value='#{article.title}')
+                div(data-ng-controller='fileController')
+                div(data-img-upload, template='cover')
+              div
+                | Preview :
+                textarea(name='preview', cols='40', rows='3') #{article.preview}
+              div
+                | Content :
+                textarea(name='content', cols='40', rows='5') #{article.content}
               div(data-ng-controller='fileController')
-              div(data-img-upload, template='cover')
-            div
-              | Preview :
-              textarea(name='preview', cols='40', rows='3') #{article.preview}
-            div
-              | Content :
-              textarea(name='content', cols='40', rows='5') #{article.content}
-            div(data-ng-controller='fileController')
-              div(data-img-upload, template='img')
-              //div(data-img-upload, template='video')
+                div(data-img-upload, template='img')
+                //div(data-img-upload, template='video')
 
-            div
-              button.btn.button(type='submit') Submit
+              div
+                button.btn.button(type='submit') Submit
+        else
+          div Form to ADD article:
+            form(name='edit_article', method='post', action="/article/create")
+              div Title :
+                span.label :
+                input(type='text', name='title', value='')
+                div(data-ng-controller='fileController')
+                div(data-img-upload, template='cover')
+              div
+                | Preview :
+                textarea(name='preview', cols='40', rows='3')
+              div
+                | Content :
+                textarea(name='content', cols='40', rows='5')
+              div(data-ng-controller='fileController')
+                div(data-img-upload, template='img')
+                //div(data-img-upload, template='video')
+                     div
+                button.btn.button(type='submit') Submit
       .col-md-4.well
         +menu
 block footer

@@ -13,6 +13,9 @@ block body
         .preview #{article.preview}
           hr
         .body #{article.content}
+          .attachement
+            each attach in article.attachments
+              img(src='#{attach.source}')
         .text-right
           a(href='/article/edit/#{article.id}') ||  Edit.   |
           a(href='/article/del/#{article.id}') |   Delete.     |
