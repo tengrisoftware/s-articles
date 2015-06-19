@@ -25,6 +25,9 @@ module.exports = {
     },
     thumb: {
       type: 'string'
+    },
+    article: {
+      model: 'Article'
     }
   }
 };
