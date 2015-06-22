@@ -2,25 +2,26 @@ extends ./layout
 
 block header
 
-
 block body
   .container
     .row
       .jumbotron
         +header
       .col-md-8
-        .row
-          each article in articles
-            .col-md-4.well
-              h4 #{article.title}
-                img(src='#{article.cover.source}')
-              .text-right
-                | #{article.preview}
-              div #{article.content}
-              .text-right
-                a(href='/article/edit/#{article.id}') ||  Edit.   |
-                a(href='/article/del/#{article.id}') |   Delete.     |
-                a(href='/article/view/#{article.id}') |    More...    ||
+        |test
+        //.col-md-12
+        //  each article in articles
+        //    .col-md-3.well
+        //      h4 #{article.title}
+        //        //div
+        //          //img(src='#{article.cover.source}')
+        //      .text-right
+        //        | #{article.preview}
+        //      //div #{article.content}
+        //      .text-right
+        //        a(href='/article/edit/#{article.id}') ||  Edit.     |
+        //        a(href='/article/del/#{article.id}')  |   Delete.   |
+        //        a(href='/article/view/#{article.id}') |    More...  ||
       .col-md-4.well
         .row
           +menu

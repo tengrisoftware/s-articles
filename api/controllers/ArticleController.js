@@ -8,7 +8,9 @@
 module.exports = {
   //Show all Articles page.
   index: function(req, res){
-    Article.find().exec(function allArticles(err, result){
+    Article.find()
+      .populate('cover')
+      .exec(function allArticles(err, result){
       if(err) {
         return res.serverError(err);
       }
