@@ -1,0 +1,45 @@
+extends ../layout
+block header
+block body
+  .container
+    .row
+      .jumbotron
+        +header()
+      .col-md-8.well
+        if (category)
+          div Form to edit category:
+            form(name='edit_category', method='post', action="/category/edit/#{category.id}")
+              div Category name :
+                span.label :
+                input(type='text', name='title', value='#{category.name}')
+                div(data-ng-controller='fileController')
+                div(data-img-upload, template='cover')
+              div
+                | Preview :
+                textarea(name='preview', cols='40', rows='3') #{article.preview}
+              div
+                | Content :
+                textarea(name='content', cols='40', rows='5') #{article.content}
+              div(data-ng-controller='fileController')
+                div(data-img-upload, template='img')
+                //div(data-img-upload, template='video')
+              div
+                button.btn.button(type='submit') Submit
+        else
+          div Form to ADD category:
+            form(name='edit_category', method='post', action="/category/create")
+              div Category name :
+                span.label :
+                input(type='text', name='name', value='')
+              div
+                | Description :
+                textarea(name='description', cols='40', rows='3')
+                     div
+                button.btn.button(type='submit') Submit
+      .col-md-4.well
+        +menu
+block footer
+  +footer()
+//
+   Created by kirill on 6/22/15.
+

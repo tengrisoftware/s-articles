@@ -14,6 +14,7 @@ block body
               .col-md-3.well
                 h4 Title
                 div: h5 #{article.title}
+                  img(src='#{article.cover.source}')
               .col-md-3.well
                 h4 Preview:
                 div: h4 #{article.preview}
@@ -22,9 +23,9 @@ block body
                 div h5  #{article.content}
               .col-md-3.well
                 .text-right
-                  div: a(href='/article/edit/#{article.id}') ||  Edit.   ||
-                  div: a(href='/article/del/#{article.id}') ||   Delete.     ||
-                  div: a(href='/article/view/#{article.id}') ||   More...    ||
+                  div: a(href='/article/edit/#{article.id}') ||  Edit.      ||
+                  div: a(href='/article/del/#{article.id}')  ||   Delete.   ||
+                  div: a(href='/article/view/#{article.id}') ||   More...   ||
       .col-md-4.well
         +menu
 block footer

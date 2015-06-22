@@ -1,0 +1,29 @@
+extends ../layout
+block header
+block body
+  .container
+    .row
+      .jumbotron
+        +header
+      .col-md-8
+        h4 Category list
+        .row
+          each category in categories
+            .col-md-12.well
+              .col-md-4.well
+                h4 Name
+                div: h5 #{category.name}
+              .col-md-8.well
+                h4 Description:
+                div: h4 #{category.description}
+                .text-right
+                  div: a(href='/category/edit/#{category.id}') ||  Edit.      ||
+                  div: a(href='/category/del/#{category.id}')  ||   Delete.   ||
+                  //div: a(href='/category/view/#{category.id}') ||   More...   ||
+      .col-md-4.well
+        +menu
+block footer
+  +footer()
+//
+   Created by kirill on 6/22/15.
+
