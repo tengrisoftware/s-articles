@@ -30,6 +30,7 @@ module.exports = {
     }
     Article.findOne({id: req.param('id')})
       .populate('cover')
+      .populate('attachments')
       .exec(function(err, result) {
         if(err) {
           return res.serverError(err);
@@ -55,16 +56,20 @@ module.exports = {
         title : req.param('title'),
         content : req.param('content'),
         preview : req.param('preview'),
-        cover : req.param('cover'),
-        attachments : req.param('attachments'),
+        cover : req.param('cover')
       };
+      var attachments = req.param('attachments');
 
       console.log('art : ', art);
 
       Article.create(art).exec(function(err, result){
-        if (err){
+        attachments.forEach(function(thisAttachmentId){
+          result.attachments.add(thisAttachmentId);
+        });
+        result.save(console.log);
+        if (err) {
           return res.serverError(err);
-        };
+        }
         console.log('result : ', result);
 
         if(!result){

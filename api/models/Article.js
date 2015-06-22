@@ -38,8 +38,8 @@ module.exports = {
       type: 'datetime'
     },
     attachments: {
-      type: 'collection',
-      model: 'Attachment'
+      collection: 'Attachment',
+      via: 'article'
     }
   }
 };
