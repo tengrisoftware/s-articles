@@ -24,7 +24,7 @@ module.exports = {
     if( req.method.toUpperCase() == "POST") {
       var categoryNew = {
         name: req.param('name'),
-        description: req.param('descrption'),
+        description: req.param('description'),
         parent: req.param('parentId')
       }
 
@@ -45,12 +45,42 @@ module.exports = {
   edit: function(req, res) {
     var id = req.param('id');
 
+    // нет категории на редактирование, создаем новую.
     if (!id){
+      // ищем все категории что бы для новой можно было выбрать родителя.
+      Category.find().exec(function(err, result){
+        if (err) {
+          return res.serverError(err);
+        }
+        return res.view({  //return results to index.view
+          categories: result
+        });
+      })
+
+    } else {
       return res.view();
     }
+  },
 
+  //Delete existing category
+  del: function(req, res){
+    var id = req.param('id');
 
+    if(!id){
+      // if id is empty then not_found error
+      return res.notFound('No such category');
+    }
 
+    Category.destroy({id: req.param('id')}).exec(function (err, result) {
+      if (err) {
+        return res.serverError(err);
+      }
+      if (!result) {
+        return res.notFound();
+      }
+      return res.redirect('/category/index')
+    })
   }
+
 };
 

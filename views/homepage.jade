@@ -8,20 +8,19 @@ block body
       .jumbotron
         +header
       .col-md-8
-        |test
-        //.col-md-12
-        //  each article in articles
-        //    .col-md-3.well
-        //      h4 #{article.title}
-        //        //div
-        //          //img(src='#{article.cover.source}')
-        //      .text-right
-        //        | #{article.preview}
-        //      //div #{article.content}
-        //      .text-right
-        //        a(href='/article/edit/#{article.id}') ||  Edit.     |
-        //        a(href='/article/del/#{article.id}')  |   Delete.   |
-        //        a(href='/article/view/#{article.id}') |    More...  ||
+        .row
+          each article in articles
+            .col-md-3.well
+              h4 #{article.title}
+                div
+                  img(src='#{article.cover.source}')
+              .text-right
+                | #{article.preview}
+              div #{article.content}
+              .text-right
+                a(href='/article/edit/#{article.id}') ||  Edit.     |
+                a(href='/article/del/#{article.id}')  |   Delete.   |
+                a(href='/article/view/#{article.id}') |    More...  ||
       .col-md-4.well
         .row
           +menu

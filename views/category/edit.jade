@@ -28,14 +28,18 @@ block body
         else
           div Form to ADD category:
             form(name='edit_category', method='post', action="/category/create")
+              if categories
+                select
+                  each category, i in categories
+                    option(value=i) '#{category.name}'
               div Category name :
                 span.label :
                 input(type='text', name='name', value='')
               div
                 | Description :
                 textarea(name='description', cols='40', rows='3')
-                     div
-                button.btn.button(type='submit') Submit
+
+              button.btn.button(type='submit') Submit
       .col-md-4.well
         +menu
 block footer

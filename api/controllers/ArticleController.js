@@ -142,8 +142,6 @@ module.exports = {
       if (!result) {
         return res.notFound();
       }
-      //var backURL = req.header('Referer') || '/';
-      //return res.redirect(backURL);
       return res.redirect('/article/index')
     })
   }
