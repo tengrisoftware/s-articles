@@ -90,7 +90,7 @@ module.exports = {
     if (!id) {
       return res.view();
     }
-    Article.findOne({id: req.param('id')})
+    Article.findOne({id: id})
       .populate('cover')
       .exec(function (err, result) {
         if (err) {
@@ -108,7 +108,7 @@ module.exports = {
           result.cover = req.param('cover');
           result.attachments = req.param('attachments');
 
-         console.log(" result: = ", result);
+         //console.log(" result: = ", result);
          //console.log(" result.cover: = ", result.cover);
          //return res.ok;
 

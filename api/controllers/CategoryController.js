@@ -14,6 +14,13 @@ module.exports = {
       if (!result) { //no categories found
         return res.notFound();
       }
+
+     console.log('result before : ', result);
+
+     var decim = _.groupBy(result,result.parent);
+
+     console.log('result after : ', decim);
+
       return res.view({  //return results to index.view
         categories: result
       });
@@ -25,7 +32,8 @@ module.exports = {
       var categoryNew = {
         name: req.param('name'),
         description: req.param('description'),
-        parent: req.param('parentId')
+        parent: req.param('parentId'),
+        active:true
       }
 
       console.log('CREATE.categoryNew : ' ,categoryNew);
@@ -52,13 +60,46 @@ module.exports = {
         if (err) {
           return res.serverError(err);
         }
+
+        console.log('result before : ', result);
+        //_.groupBy(result, result.parent, result);
+        var s = _.groupBy(result, result.parent, result);
+
+        console.log('result after : ', s);
+
         return res.view({  //return results to index.view
-          categories: result
+          categoriesAll: result
         });
       })
 
     } else {
-      return res.view();
+      Category.findOne({id: id})
+        .exec(function (err, result){
+          if (err) {
+            return res.serverError(err);
+          }
+
+          if (req.method.toUpperCase() == "POST") {
+            result.name =  req.param('name');
+            result.description = req.param('description');
+            result.parent = req.param('parentId');
+            result.active = true;
+
+            result.save(function saveCategory(err) {
+              if (err) {
+                return res.serverError(err);
+              }
+              return res.redirect('/category/index/')
+            });
+
+          } else {
+            return res.view({  //return results to index.view
+              categoryEdit: result
+            });
+          }
+        })
+
+      //return res.view();
     }
   },
 
