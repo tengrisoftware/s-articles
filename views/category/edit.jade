@@ -29,9 +29,10 @@ block body
           div Form to ADD category:
             form(name='edit_category', method='post', action="/category/create")
               if categories
-                select
+                select(name='parentId')
+                  option(value='../root') ../root
                   each category, i in categories
-                    option(value=i) '#{category.name}'
+                    option(value=category.id) '#{category.name}'
               div Category name :
                 span.label :
                 input(type='text', name='name', value='')
