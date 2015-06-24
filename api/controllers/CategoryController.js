@@ -60,53 +60,57 @@ module.exports = {
         if (err) {
           return res.serverError(err);
         }
-
+        //групперуем их по айдишнику парента
         var current = _.groupBy(result, function (s) {return s.parent});
-        var arrayNew = [];
-        //console.log('current : ', current[''].length);
+        var arrayNew = []; //обьявляем новый массив, в который будем заносить результат
 
+        //выбираем все категории корневого уровня и заносим в массив
         current[''].forEach(function(elem){
           arrayNew.push(elem);
         });
+        do { //запускаем цикл по массиву обьектов, что бы перебрать все группы.
+          arrayNew.forEach(function(elem,i,current){ //берем первый рутовый елемент
+            current[elem.id].forEach(elem)     // ищем всех его чаилдов, а точнее все елементы в которых он указан как папа и запускаем ещёё один цикл.
+            {
+              arrayNew[i].push(elem); //добавляем новый найденный элемент в текущую позицию.
+            }
+            delete current[elem.id];  // удаляем отработанный блок в обьекте.
+          });
+        } while (current);
 
+        //по идеи у нас теперь есть новый массив обьектов под название arrayNew, в котором уже все отсортерованно как нужно.
+sdf
+        //console.log('current : ', current[''].length);
 
         function cats(currentId, allCats) {
           var childs = [];
           var array = [];
-          //console.log(allCats[currentId]);
+          console.log('allCats[currentId] = ', allCats[currentId], '\n\n')
           if (!allCats[currentId]) {
             return [];
           }
-
-          array.push(allCats[currentId].forEach(function(elem, id, arr)
+          array.push(allCats[currentId].forEach(function(elem, i, arr)
           {
+            //console.log('iteration = ', i, '\n element_body = ', elem);
             return cats(elem.id, allCats);
           }));
 
-          return array;
 
+          console.log('array = ', array);
           if(array) {
             childs.push(array);
           }
-          console.log(childs);
+          console.log('childs = ', childs);
           return childs;
         };
+        //console.log('\n \n \n basic arrayNew was: ', arrayNew);
 
-        var last = arrayNew.forEach(function(elem, i, arr) {
-          //console.log('elem: ', elem, 'i: ', i, 'arr: ',arr);
+        arrayNew.push(arrayNew.forEach(function(elem, i, arr) {
+          //console.log('iteration = ', i, '\n element_body = ', elem);
           return cats(elem.id, current);
-        })
+        }));
 
-        //console.log(last);
-
-        //current.forEach (function (curr, i, current){
-        //  console.log('curr ['+i+'] : ', curr );
-        //}) ;
-        //for (var i; i<current.length; i++) {
-        //  console.log('current [' + i +'] : ', current[i]);
-        //}
-
-        //console.log('result after : ', current);
+        console.log('\n \n ************************ \n \n resulted arrayNew = ', arrayNew);
 
         return res.view({  //return results to index.view
           categoriesAll: result
