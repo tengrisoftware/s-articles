@@ -61,11 +61,18 @@ module.exports = {
           return res.serverError(err);
         }
 
-        console.log('result before : ', result);
-        //_.groupBy(result, result.parent, result);
-        var s = _.groupBy(result, result.parent, result);
+        var current = _.groupBy(result, function (s) {return s.parent});
+        //var arrayNew = [];
+        //console.log('current.length : ', current.length);
 
-        console.log('result after : ', s);
+        current.forEach (function (curr, i, current){
+          console.log('curr ['+i+'] : ', curr );
+        }) ;
+        //for (var i; i<current.length; i++) {
+        //  console.log('current [' + i +'] : ', current[i]);
+        //}
+
+        //console.log('result after : ', current);
 
         return res.view({  //return results to index.view
           categoriesAll: result
