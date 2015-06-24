@@ -15,11 +15,11 @@ module.exports = {
         return res.notFound();
       }
 
-     console.log('result before : ', result);
+     //console.log('result before : ', result);
 
-     var decim = _.groupBy(result,result.parent);
+     //var decim = _.groupBy(result,result.parent);
 
-     console.log('result after : ', decim);
+     //console.log('result after : ', decim);
 
       return res.view({  //return results to index.view
         categories: result
@@ -62,12 +62,46 @@ module.exports = {
         }
 
         var current = _.groupBy(result, function (s) {return s.parent});
-        //var arrayNew = [];
-        //console.log('current.length : ', current.length);
+        var arrayNew = [];
+        //console.log('current : ', current[''].length);
 
-        current.forEach (function (curr, i, current){
-          console.log('curr ['+i+'] : ', curr );
-        }) ;
+        current[''].forEach(function(elem){
+          arrayNew.push(elem);
+        });
+
+
+        function cats(currentId, allCats) {
+          var childs = [];
+          var array = [];
+          //console.log(allCats[currentId]);
+          if (!allCats[currentId]) {
+            return [];
+          }
+
+          array.push(allCats[currentId].forEach(function(elem, id, arr)
+          {
+            return cats(elem.id, allCats);
+          }));
+
+          return array;
+
+          if(array) {
+            childs.push(array);
+          }
+          console.log(childs);
+          return childs;
+        };
+
+        var last = arrayNew.forEach(function(elem, i, arr) {
+          //console.log('elem: ', elem, 'i: ', i, 'arr: ',arr);
+          return cats(elem.id, current);
+        })
+
+        //console.log(last);
+
+        //current.forEach (function (curr, i, current){
+        //  console.log('curr ['+i+'] : ', curr );
+        //}) ;
         //for (var i; i<current.length; i++) {
         //  console.log('current [' + i +'] : ', current[i]);
         //}
