@@ -69,34 +69,29 @@ module.exports = {
 
         //console.log('current : ', current[''].length);
 
-        var cats = function(cat) {
-          if (cat.id in current) {
-            for(c in current[cat.id]) {
-              current[cat.id][c].level = cat.level + 1;
-              current[cat.id][c].child = [];
-              if(childs = cats(current[cat.id][c])) {
-                current[cat.id][c].child.push(childs);
-              }
-            }
-            return current[cat.id];
+        var cats = function(cat, raw) {
+          if (cat.id in raw) {
+            subCats(cat.id, cat.level, raw);
           }
-
-          return false;
         };
 
-        for (i in current['']) {
-          current[''][i].child = [];
-          current[''][i].level = 0;
-          if(childs = cats(current[''][i])) {
-            current[''][i].child.push(childs);
+        var subCats = function(catId, level, raw) {
+          for(c in raw[catId]) {
+            var cat = raw[catId][c];
+            cat.level = level + 1;
+            arrayNew.push({id: cat.id, name: new Array(cat.level * 4 + 1).join('-') + "" + cat.name});
+            cats(raw[catId][c], raw);
           }
-        }
-        console.log(current['']);
+        };
+
+        subCats('', 0, current);
+
+        console.log(current[''], arrayNew);
 
         //console.log('\n \n \n basic arrayNew was: ', arrayNew);
 
         return res.view({  //return results to index.view
-          categoriesAll: result
+          categoriesAll: arrayNew
         });
       })
 

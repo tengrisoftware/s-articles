@@ -13,7 +13,7 @@ block body
                 select(name='parentId')
                   option(value='')
                   each category, i in categoriesAll
-                    option(value=category.id) '#{category.name}'
+                    option(value=category.id) #{category.name}
               div Category name :
                 span.label :
                 input(type='text', name='name', value='#{categoryEdit.name}')
@@ -29,7 +29,7 @@ block body
                 select(name='parentId')
                   option(value='')
                   each category, i in categoriesAll
-                    option(value=category.id) '#{category.name}'
+                    option(value=category.id) #{category.name}
               div Category name :
                 span.label :
                 input(type='text', name='name', value='')
