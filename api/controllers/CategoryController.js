@@ -56,7 +56,9 @@ module.exports = {
     // нет категории на редактирование, создаем новую.
     if (!id){
       // ищем все категории что бы для новой можно было выбрать родителя.
-      Category.find().exec(function(err, result){
+      Category.find()
+        .sort('name')
+        .exec(function(err, result){
         if (err) {
           return res.serverError(err);
         }
