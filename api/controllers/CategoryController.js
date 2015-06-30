@@ -55,48 +55,20 @@ module.exports = {
 
     // нет категории на редактирование, создаем новую.
     if (!id){
-      // ищем все категории что бы для новой можно было выбрать родителя.
+
       Category.find()
         .sort('name')
-        .exec(function(err, result){
-        if (err) {
-          return res.serverError(err);
-        }
-        //групперуем их по айдишнику парента
-        var current = _.groupBy(result, function (s) {return s.parent});
-        var arrayNew = []; //обьявляем новый массив, в который будем заносить результат
+        .exec(function(err, result) {
 
-
-        //по идеи у нас теперь есть новый массив обьектов под название arrayNew, в котором уже все отсортерованно как нужно.
-
-        //console.log('current : ', current[''].length);
-
-        var cats = function(cat, raw) {
-          if (cat.id in raw) {
-            subCats(cat.id, cat.level, raw);
+          var categoryList = [];
+          if (err) {
+            return res.serverError(err);
           }
-        };
-
-        var subCats = function(catId, level, raw) {
-          for(c in raw[catId]) {
-            var cat = raw[catId][c];
-            cat.level = level + 1;
-            arrayNew.push({id: cat.id, name: new Array(cat.level * 4 + 1).join('-') + "" + cat.name});
-            cats(raw[catId][c], raw);
-          }
-        };
-
-        subCats('', 0, current);
-
-        console.log(current[''], arrayNew);
-
-        //console.log('\n \n \n basic arrayNew was: ', arrayNew);
-
-        return res.view({  //return results to index.view
-          categoriesAll: arrayNew
+          categoryList = SortCategories.list(result);
+          return res.view({  //return results to index.view
+            categoriesAll: categoryList
+          });
         });
-      })
-
     } else {
       Category.findOne({id: id})
         .exec(function (err, result){
@@ -116,7 +88,6 @@ module.exports = {
               }
               return res.redirect('/category/index/')
             });
-
           } else {
             return res.view({  //return results to index.view
               categoryEdit: result
